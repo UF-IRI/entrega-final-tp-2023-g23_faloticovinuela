@@ -1,6 +1,5 @@
 TEMPLATE = app
-
-CONFIG += c++17
+CONFIG += c++11
 
 isEmpty(CATCH_INCLUDE_DIR): CATCH_INCLUDE_DIR=$$(CATCH_INCLUDE_DIR)
 # set by Qt Creator wizard
@@ -12,8 +11,7 @@ isEmpty(CATCH_INCLUDE_DIR): {
 }
 
 SOURCES += \
-    main.cpp \
-    tst_proyecto.cpp
+    main.cpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libreria/release/ -llibreria
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libreria/debug/ -llibreria
