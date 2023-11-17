@@ -140,7 +140,7 @@ Asistencia* findAssistances(Asistencia* assistances,uint cant ,str idClient) {
 
 eAddInscriptionInAssistance addInscriptionAssistance(Inscripcion* inscriptions,uint cant,Inscripcion inscription){
   if(cant == 0){
-    *(inscriptions + cant - 1) = inscription;
+    *inscriptions  = inscription;
   }
   *(inscriptions + cant - 1) = inscription;
   return eAddInscriptionInAssistance::SuccessAddAssistance;

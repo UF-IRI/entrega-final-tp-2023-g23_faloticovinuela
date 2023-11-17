@@ -202,6 +202,7 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
       // guardar asistencia
       Asistencia* assistance =
           findAssistances(gym.assistances, gym.countAssistances, idClient);
+
       // chequear si existe
       if (assistance == nullptr) {
         // crearla y agregar
@@ -239,7 +240,7 @@ bool isClientInInscription(str *inscriptions, uint cant, str idClient) {
     return false;
   }
   while (true) {
-    if (*auxInscriptions == idClient) {
+    if ( idClient.compare(*auxInscriptions) == 0) {
       return true;
     }
     if (auxInscriptions == auxLastInscriptions)

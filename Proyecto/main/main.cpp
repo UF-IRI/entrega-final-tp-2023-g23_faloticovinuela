@@ -62,7 +62,8 @@ int main() {
   for (int i = 0; i < 10; i++) {
     uint idBook = genRandomNumber(1, realCantClasses);
     uint idClient = genRandomNumber(1, countClients);
-    bookClassGym(*gymData, idBook, to_string(idClient));
+    eBookClass res = bookClassGym(*gymData, idBook, to_string(idClient));
+    cout<< "RES: " << res << " - Cant assitances:" << gymData->countAssistances<< endl;
   }
 
   cout << "Cant clientes: " << gymData->countClients
