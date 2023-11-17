@@ -59,7 +59,7 @@ int main() {
 
   // printClients(gymData->clients,gymData->countClients);
 
-  for (int i = 0; i < 5000; i++) {
+  for (int i = 0; i < 30; i++) {
     uint idBook = genRandomNumber(1, realCantClasses);
     uint idClient = genRandomNumber(1, countClients);
     eBookClass res = bookClassGym(*gymData, idBook, to_string(idClient));

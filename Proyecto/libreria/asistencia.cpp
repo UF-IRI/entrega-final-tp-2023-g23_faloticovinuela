@@ -10,9 +10,6 @@ void resizeAssistences(Asistencia **miLista, uint tam, uint nuevoTam) {
   uint longitud = (tam < nuevoTam) ? tam : nuevoTam;
 
   for (uint i = 0; i < longitud; i++){
-    cout << "awd: " <<  (miLista[i] == nullptr)<< endl;
-    Asistencia punt = *miLista[i];
-    cout << "awd: " <<  punt.idCliente<< endl;
     aux[i] = *miLista[i]; // **(miLista + i)
   }
 

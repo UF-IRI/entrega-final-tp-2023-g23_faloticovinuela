@@ -156,7 +156,6 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
 
   eBook bookClass = findBook(gym.books, gym.countBooks, idBook);
   eClass realClass = findClass(gym.clases, gym.countClasses, bookClass.idClass);
-  cout << "VAR:" << idBook << "-" << idClient << endl;
   // comprobar que la clase existe
   if (bookClass.idClass == "") {
     return eBookClass::ErrNonExistentClass;
@@ -221,7 +220,6 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
         }
       }
     } else {
-      printAssistances(gym.assistances,gym.countAssistances);
       resizeAssistences(&gym.assistances, gym.countAssistances,
                         gym.countMaxAssistances * 2);
       gym.countAssistances = gym.countMaxAssistances * 2;
