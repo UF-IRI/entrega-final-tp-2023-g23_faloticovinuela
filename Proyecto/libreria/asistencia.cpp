@@ -69,8 +69,11 @@ void printAssistances(Asistencia *assitances, int cant) {
 }
 
 eAddAssistance addAssistance(Asistencia* assistances,uint cant ,Asistencia assistance){
-
-  *(assistances + cant) = assistance;
+  if(cant==0){
+    assistances[0] = assistance;
+    return eAddAssistance::SuccessAdd;
+  }
+  *(assistances + cant -1) = assistance;
   // miAgenda->*(misContactos + i )
   return eAddAssistance::SuccessAdd;
 }
@@ -121,6 +124,9 @@ eCodFile writeAssistances(Asistencia *assistances, uint cant, str today) {
 Asistencia* findAssistances(Asistencia* assistances,uint cant ,str idClient) {
   Asistencia* aux = assistances,
       * ultimo = (assistances) +cant - 1;
+  if(cant == 0){
+    return nullptr;
+  }
   while(true) {
     if (aux->idCliente == stoul(idClient)) {
       return aux;
@@ -133,6 +139,9 @@ Asistencia* findAssistances(Asistencia* assistances,uint cant ,str idClient) {
 }
 
 eAddInscriptionInAssistance addInscriptionAssistance(Inscripcion* inscriptions,uint cant,Inscripcion inscription){
+  if(cant == 0){
+    *(inscriptions + cant - 1) = inscription;
+  }
   *(inscriptions + cant - 1) = inscription;
   return eAddInscriptionInAssistance::SuccessAddAssistance;
 }

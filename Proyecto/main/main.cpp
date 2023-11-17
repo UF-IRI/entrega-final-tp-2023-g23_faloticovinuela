@@ -1,8 +1,8 @@
 #include "asistencia.h"
 #include "cliente.h"
 #include "gym.h"
-#include <ctime>
 #include <QThread>
+#include <ctime>
 
 int main() {
 
@@ -34,10 +34,10 @@ int main() {
 
   /* Clases */
   uint realCantClasses;
-  uint cantClasses = countClasses(fileClasses,realCantClasses);
+  uint cantClasses = countClasses(fileClasses, realCantClasses);
   eClass *classes = new eClass[cantClasses];
   eBook *books = new eBook[realCantClasses];
-  eCodFile resClasses = readClasses(classes, books,fileClasses, cantClasses);
+  eCodFile resClasses = readClasses(classes, books, fileClasses, cantClasses);
 
   /* Asistencias
   int cantAssistances = countAssistences(fileAssistances);
@@ -49,15 +49,34 @@ int main() {
   // printClasses(classes,cantClasses);
   // printAssistances(assitances,cantAssistances);
   // printClients(clients,countClients);
-  Asistencia* assitances = new Asistencia[DEFAULT_MAX_ASSITANCES_CAPACITY];
+  Asistencia *assitances = new Asistencia[DEFAULT_MAX_ASSITANCES_CAPACITY];
   uint countAssitances = 0;
-  eGym* gymData = new eGym({clients,countClients,assitances,countAssitances,DEFAULT_MAX_ASSITANCES_CAPACITY,classes,cantClasses,time(0),books,realCantClasses}) ;
+  eGym *gymData = new eGym({clients, countClients, assitances, countAssitances,
+                            DEFAULT_MAX_ASSITANCES_CAPACITY, classes,
+                            cantClasses, time(0), books, realCantClasses});
 
-  cout <<"Cant clientes: " << gymData->countClients<< " - Cant assitances: " << gymData->countAssistances << " - Cant classes: " << gymData->countClasses
-      << " - Cant books: " << gymData->countBooks << " - Today: " << ctime(&gymData->today)  << endl ;
+
+
+  // printClients(gymData->clients,gymData->countClients);
+
+  for (int i = 0; i < 10; i++) {
+    uint idBook = genRandomNumber(1, realCantClasses);
+    uint idClient = genRandomNumber(1, countClients);
+    bookClassGym(*gymData, idBook, to_string(idClient));
+  }
+
+  cout << "Cant clientes: " << gymData->countClients
+       << " - Cant assitances: " << gymData->countAssistances
+       << " - Cant classes: " << gymData->countClasses
+       << " - Cant books: " << gymData->countBooks
+       << " - Today: " << ctime(&gymData->today) << endl;
+
+  printAssistances(gymData->assistances, gymData->countAssistances);
+
   delete[] clients;
   delete[] classes;
   delete[] assitances;
+  delete[] books;
   fileClient.close();
   fileClasses.close();
   fileAssistances.close();

@@ -64,5 +64,8 @@ bool isClientInBook(eBook* books,uint cant, uint schedule ,str idClient);
 bool isClientInInscription(str* inscriptions, uint cant, str idClient);
 bool isClientInSchedule(eBook *books, uint cant, uint schedule, str idClient);
 eClass findClass(eClass *classes, uint cant, str idClass);
+void printBooks(eBook* books,uint cant);
+
+uint genRandomNumber(uint min,uint max);
 
 #endif // GYM_H

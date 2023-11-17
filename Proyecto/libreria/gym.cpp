@@ -24,6 +24,7 @@ eCodFile readClasses(eClass *classes, eBook *books, ifstream &file, int cant) {
   str header;
   getline(file, header);
   eClass *aux = classes;
+  eBook *auxBooks = books;
   str *contSchedule;
   bool firstLine = true;
   str line;
@@ -44,11 +45,11 @@ eCodFile readClasses(eClass *classes, eBook *books, ifstream &file, int cant) {
       aux->cantSchedules += 1;
 
       // Init Book
-      books->idBook = stoul(idClass);
-      books->countInscriptions = 0;
-      books->inscriptions = new string[aux->maxCapacity];
-      books->idClass = aux->idClass;
-      books->schedule = stoul(schedule);
+      auxBooks->idBook = stoul(idClass);
+      auxBooks->countInscriptions = 0;
+      auxBooks->inscriptions = new string[aux->maxCapacity];
+      auxBooks->idClass = aux->idClass;
+      auxBooks->schedule = stoul(schedule);
 
     } else if (name != "Musculacion" && name != aux->name) {
       if (!firstLine) {
@@ -66,14 +67,15 @@ eCodFile readClasses(eClass *classes, eBook *books, ifstream &file, int cant) {
       contSchedule = aux->schedules;
 
       // Init Book
-      books->idBook = stoul(idClass);
-      books->countInscriptions = 0;
-      books->inscriptions = new str[aux->maxCapacity];
-      books->idClass = aux->idClass;
-      books->schedule = stoul(schedule);
+      auxBooks->idBook = stoul(idClass);
+      auxBooks->countInscriptions = 0;
+      auxBooks->inscriptions = new str[aux->maxCapacity];
+      auxBooks->idClass = aux->idClass;
+      auxBooks->schedule = stoul(schedule);
     }
+    auxBooks++;
   }
-  cout << endl;
+
   return eCodFile::SuccessOperation;
 }
 
@@ -142,7 +144,9 @@ uint countClasses(ifstream &file, uint &realCantClasses) {
       names = auxName + ',';
       cantClasses++;
     }
-    realCantClasses++;
+    if(auxName.compare("Musculacion") != 0){
+      realCantClasses++;
+    }
   }
 
   return cantClasses;
@@ -158,7 +162,7 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
     return eBookClass::ErrNonExistentClass;
 
     // comprobar que la clase tenga espacio
-  } else if (bookClass.countInscriptions < realClass.maxCapacity) {
+  } else if (bookClass.countInscriptions >= realClass.maxCapacity) {
     return eBookClass::ErrNonNoSpaceInClass;
   }
 
@@ -199,15 +203,18 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
       Asistencia* assistance =
           findAssistances(gym.assistances, gym.countAssistances, idClient);
       // chequear si existe
-      if (assistance->CursosInscriptos == nullptr) {
+      if (assistance == nullptr) {
         // crearla y agregar
-        Asistencia newAssistance = {stoul(idClient),0,new Inscripcion[DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY]};
+        Asistencia newAssistance = {stoul(idClient),1,new Inscripcion[DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY]};
         *newAssistance.CursosInscriptos = newInscription;
+        gym.countAssistances ++;
         addAssistance(gym.assistances,gym.countAssistances,newAssistance);
       } else {
         // agregar
         if(assistance->cantInscriptos < DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY){
+          assistance->cantInscriptos++;
           addInscriptionAssistance(assistance->CursosInscriptos,assistance->cantInscriptos,newInscription);
+
         } else {
           return eBookClass::ErrMaxInscriptionsReachedInClass;
         }
@@ -228,6 +235,9 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
 bool isClientInInscription(str *inscriptions, uint cant, str idClient) {
   str *auxInscriptions = (inscriptions),
       *auxLastInscriptions = (inscriptions) + cant - 1;
+  if(cant == 0){
+    return false;
+  }
   while (true) {
     if (*auxInscriptions == idClient) {
       return true;
@@ -289,4 +299,37 @@ eClass findClass(eClass *classes, uint cant, str idClass) {
   return nullClass;
 }
 
+void printBooks(eBook* books,uint cant){
+  eBook *aux = books, *last = (books) + (cant - 1);
+  cout << "--------------Books--------------" << endl;
+  while (true) {
+    cout << "Name:" << aux->idBook << endl;
+    cout << "Cant inscriptions:" << aux->countInscriptions << endl;
+    if(aux->countInscriptions){
+      str *auxH = aux->inscriptions,
+          *lastAux = (aux->inscriptions) + (aux->countInscriptions - 1);
+      cout << "Inscriptiones:";
+      while (true) {
+        cout << *auxH << ",";
+        if (auxH == lastAux)
+          break;
+        auxH++;
+      }
+      cout << endl;
+    }
+
+    if (aux == last)
+      break;
+
+    aux++;
+  }
+  cout << "---------------------------------------" << endl;
+}
+
+uint genRandomNumber(uint min,uint max){
+   srand((unsigned) time(0));
+   uint randomNumber;
+   randomNumber = (rand() % max) + min;
+   return randomNumber;
+}
 

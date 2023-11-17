@@ -14,4 +14,5 @@ eCodFile leerClientes(eClient* clientes,ifstream& archivo);
 eClient findClient(eClient* clients,uint cant, str id);
 void printClients(eClient* clients,int cant);
 bool existClient(eClient* clients,uint cant, str id);
+void buscar_y_reemplazar_todos(string& frase, string buscar, string reemplazar);
 #endif // CLIENTE_H
