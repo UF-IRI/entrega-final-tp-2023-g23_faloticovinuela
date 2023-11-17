@@ -156,7 +156,7 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
 
   eBook bookClass = findBook(gym.books, gym.countBooks, idBook);
   eClass realClass = findClass(gym.clases, gym.countClasses, bookClass.idClass);
-
+  cout << "VAR:" << idBook << "-" << idClient << endl;
   // comprobar que la clase existe
   if (bookClass.idClass == "") {
     return eBookClass::ErrNonExistentClass;
@@ -208,7 +208,7 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
         // crearla y agregar
         Asistencia newAssistance = {stoul(idClient),1,new Inscripcion[DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY]};
         *newAssistance.CursosInscriptos = newInscription;
-        gym.countAssistances ++;
+        gym.countAssistances++;
         addAssistance(gym.assistances,gym.countAssistances,newAssistance);
       } else {
         // agregar
@@ -221,6 +221,7 @@ eBookClass bookClassGym(eGym &gym, uint idBook, str idClient) {
         }
       }
     } else {
+      printAssistances(gym.assistances,gym.countAssistances);
       resizeAssistences(&gym.assistances, gym.countAssistances,
                         gym.countMaxAssistances * 2);
       gym.countAssistances = gym.countMaxAssistances * 2;
@@ -328,7 +329,7 @@ void printBooks(eBook* books,uint cant){
 }
 
 uint genRandomNumber(uint min,uint max){
-   srand((unsigned) time(0));
+
    uint randomNumber;
    randomNumber = (rand() % max) + min;
    return randomNumber;

@@ -1,5 +1,6 @@
 #include "asistencia.h"
-
+#include <iostream>
+using namespace std;
 void resizeAssistences(Asistencia **miLista, uint tam, uint nuevoTam) {
   Asistencia *aux = new Asistencia[nuevoTam];
 
@@ -8,8 +9,12 @@ void resizeAssistences(Asistencia **miLista, uint tam, uint nuevoTam) {
 
   uint longitud = (tam < nuevoTam) ? tam : nuevoTam;
 
-  for (uint i = 0; i < longitud; i++)
+  for (uint i = 0; i < longitud; i++){
+    cout << "awd: " <<  (miLista[i] == nullptr)<< endl;
+    Asistencia punt = *miLista[i];
+    cout << "awd: " <<  punt.idCliente<< endl;
     aux[i] = *miLista[i]; // **(miLista + i)
+  }
 
   delete[] *miLista;
   *miLista = aux;
@@ -140,7 +145,7 @@ Asistencia* findAssistances(Asistencia* assistances,uint cant ,str idClient) {
 
 eAddInscriptionInAssistance addInscriptionAssistance(Inscripcion* inscriptions,uint cant,Inscripcion inscription){
   if(cant == 0){
-    *inscriptions  = inscription;
+    *(inscriptions + cant - 1) = inscription;
   }
   *(inscriptions + cant - 1) = inscription;
   return eAddInscriptionInAssistance::SuccessAddAssistance;
