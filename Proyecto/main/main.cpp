@@ -56,13 +56,14 @@ int main() {
                             cantClasses, time(0), books, realCantClasses});
 
 
-
-  // printClients(gymData->clients,gymData->countClients);
-
-  for (int i = 0; i < 30; i++) {
+  for (int i = 0; i < 100000; i++) {
     uint idBook = genRandomNumber(1, realCantClasses);
     uint idClient = genRandomNumber(1, countClients);
-    eBookClass res = bookClassGym(*gymData, idBook, to_string(idClient));
+    if(i == 5000){
+        gymData->today += + 100000000;
+    }
+    eBookClass res = bookClassGym(gymData, idBook, to_string(idClient));
+    cout<< res <<endl;
   }
 
   cout << "Cant clientes: " << gymData->countClients

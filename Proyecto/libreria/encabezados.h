@@ -9,6 +9,8 @@
 #define BLK 6
 #define DEFAULT_MAX_ASSITANCES_CAPACITY 45
 #define DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY 5
+#define DEFAULT_MAX_CLASS_CAPACITY 45
+#define DEFAULT_MAX_CLASS_SCHEDULE_CAPACITY 10
 typedef std::string str;
 typedef unsigned int uint;
 typedef enum codArchivos{ErrorOpening=-1, ErrorWriting=0, SuccessOperation=1} eCodFile;

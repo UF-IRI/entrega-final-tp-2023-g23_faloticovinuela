@@ -19,7 +19,7 @@ typedef struct {
 } Asistencia;
 const Asistencia nullAsistencia = { 0, 0, nullptr};
 
-eAddAssistance addAssistance(Asistencia* assistances,uint cant ,Asistencia assistance);
+eAddAssistance addAssistance(Asistencia*& assistances,uint cant ,Asistencia assistance);
 bool hasSpace(Asistencia* assistances);
 eCodFile readAssistances(ifstream& file,Asistencia* assistances);
 void printAssistances(Asistencia* assitances,int cant);
@@ -28,6 +28,6 @@ int countAssistences(ifstream& file);
 void resizeAssistences(Asistencia** miLista, uint tam, uint nuevoTam);
 eCodFile writeAssistances(Asistencia* assistances,uint cant,str today);
 Asistencia* findAssistances(Asistencia* assistances,uint cant ,str idClient);
-eAddInscriptionInAssistance addInscriptionAssistance(Inscripcion* inscriptions,uint cant,Inscripcion inscription);
+eAddInscriptionInAssistance addInscriptionAssistance(Inscripcion*& inscriptions,uint cant,Inscripcion inscription);
 
 #endif // ASISTENCIA_H

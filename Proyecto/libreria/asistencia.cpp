@@ -3,14 +3,14 @@
 using namespace std;
 void resizeAssistences(Asistencia **miLista, uint tam, uint nuevoTam) {
   Asistencia *aux = new Asistencia[nuevoTam];
-
+    Asistencia *auxLista = *miLista;
   if (aux == nullptr)
     return;
 
   uint longitud = (tam < nuevoTam) ? tam : nuevoTam;
 
   for (uint i = 0; i < longitud; i++){
-    aux[i] = *miLista[i]; // **(miLista + i)
+    aux[i] = auxLista[i]; // **(miLista + i)
   }
 
   delete[] *miLista;
@@ -70,7 +70,7 @@ void printAssistances(Asistencia *assitances, int cant) {
   cout << "---------------------------------------" << endl;
 }
 
-eAddAssistance addAssistance(Asistencia* assistances,uint cant ,Asistencia assistance){
+eAddAssistance addAssistance(Asistencia*& assistances,uint cant ,Asistencia assistance){
   if(cant==0){
     assistances[0] = assistance;
     return eAddAssistance::SuccessAdd;
@@ -140,7 +140,7 @@ Asistencia* findAssistances(Asistencia* assistances,uint cant ,str idClient) {
   return nullptr;
 }
 
-eAddInscriptionInAssistance addInscriptionAssistance(Inscripcion* inscriptions,uint cant,Inscripcion inscription){
+eAddInscriptionInAssistance addInscriptionAssistance(Inscripcion*& inscriptions,uint cant,Inscripcion inscription){
   if(cant == 0){
     *(inscriptions + cant - 1) = inscription;
   }
