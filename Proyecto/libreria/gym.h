@@ -9,7 +9,7 @@ enum addContact  { ErrAgrEspacio = -1,  ExitoAgregar = 1 };
 enum srchClass { ErrSrchValue = -2,   ErrSrchIndex = -1, SuccessSearch = 1 };
 enum bookClass { ErrMaxInscriptionsReachedInClass = -7,ErrNonNoSpaceInClass = -7,ErrNonExistentClass = -6,ErrClientAlreadySubscribed = -5 ,ErrClientSubscribedOtherClass = -4 ,ErrNonExistentClient = -3,ErrSpace = -2,   ErrNotFoundClass = -1, SuccessBook = 1 };
 typedef enum eAddClientInBook{ErrorSpaceBooks=0,  SuccessAddBooks=1} eAddInscriptionInBook;
-
+typedef enum resetBooks { ErrReset = -1,   SuccessReset = 1 } eResetBooks;
 typedef enum addContact  eAddContact;
 typedef enum srchClass eSrchClass;
 typedef enum bookClass eBookClass;
@@ -67,7 +67,8 @@ bool isClientInSchedule(eBook *books, uint cant, uint schedule, str idClient);
 eClass findClass(eClass *classes, uint cant, str idClass);
 void printBooks(eBook* books,uint cant);
 eAddInscriptionInBook addClientInBook(str** inscriptions,uint cant,str idClient);
-
+eResetBooks resetBooks(eBook*& books,uint cant);
 uint genRandomNumber(uint min,uint max);
+eResetAssistances resetAssistances(Asistencia** assistances,uint cant);
 
 #endif // GYM_H

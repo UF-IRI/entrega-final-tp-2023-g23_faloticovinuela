@@ -8,7 +8,7 @@ int main() {
 
   ifstream fileClient("../../iriClientesGYM.csv");
   ifstream fileClasses("../../iriClasesGYM.csv");
-  ifstream fileAssistances("../../asistencias_1697673600000.dat", ios::binary);
+  //ifstream fileAssistances("../../asistencias_1697673600000.dat", ios::binary);
 
   if (!fileClient.is_open()) {
     cout << "No pudimos abrir el archivo Clientes" << endl;
@@ -18,10 +18,7 @@ int main() {
     cout << "No pudimos abrir el archivo Clases" << endl;
     return 0;
   }
-  if (!fileAssistances.is_open()) {
-    cout << "No pudimos abrir el archivo Asistencias" << endl;
-    return 0;
-  }
+
 
   string line;
   /* CLIENTES */
@@ -56,14 +53,20 @@ int main() {
                             cantClasses, time(0), books, realCantClasses});
 
 
-  for (int i = 0; i < 100000; i++) {
+  for (int i = 0; i < 10000; i++) {
     uint idBook = genRandomNumber(1, realCantClasses);
     uint idClient = genRandomNumber(1, countClients);
     if(i == 5000){
-        gymData->today += + 100000000;
+        gymData->today +=  100000000;
     }
+    cout<<"params: " << "idBook: " << idBook << " - idClient:" << idClient  <<endl;
+    cout << "Cant clientes: " << gymData->countClients
+         << " - Cant assitances: " << gymData->countAssistances
+         << " - Cant classes: " << gymData->countClasses
+         << " - Cant books: " << gymData->countBooks
+         << " - Today: " << ctime(&gymData->today) << endl;
     eBookClass res = bookClassGym(gymData, idBook, to_string(idClient));
-    cout<< res <<endl;
+    cout<<i << ":" << res <<endl;
   }
 
   cout << "Cant clientes: " << gymData->countClients
@@ -76,10 +79,10 @@ int main() {
 
   delete[] clients;
   delete[] classes;
-  delete[] assitances;
+ // delete[] assitances;
   delete[] books;
   fileClient.close();
   fileClasses.close();
-  fileAssistances.close();
+  //fileAssistances.close();
   return 0;
 }

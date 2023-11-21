@@ -1,7 +1,7 @@
 #include "asistencia.h"
 #include <iostream>
 using namespace std;
-void resizeAssistences(Asistencia **miLista, uint tam, uint nuevoTam) {
+void resizeAssistances(Asistencia **miLista, uint tam, uint nuevoTam) {
   Asistencia *aux = new Asistencia[nuevoTam];
     Asistencia *auxLista = *miLista;
   if (aux == nullptr)

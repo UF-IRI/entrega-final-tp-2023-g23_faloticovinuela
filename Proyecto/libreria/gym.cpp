@@ -144,7 +144,7 @@ uint countClasses(ifstream &file, uint &realCantClasses) {
       names = auxName + ',';
       cantClasses++;
     }
-    if(auxName.compare("Musculacion") != 0){
+    if (auxName.compare("Musculacion") != 0) {
       realCantClasses++;
     }
   }
@@ -152,10 +152,11 @@ uint countClasses(ifstream &file, uint &realCantClasses) {
   return cantClasses;
 }
 
-eBookClass bookClassGym(eGym*& gym, uint idBook, str idClient) {
+eBookClass bookClassGym(eGym *&gym, uint idBook, str idClient) {
 
-  eBook* bookClass = findBook(gym->books, gym->countBooks, idBook);
-  eClass realClass = findClass(gym->clases, gym->countClasses, bookClass->idClass);
+  eBook *bookClass = findBook(gym->books, gym->countBooks, idBook);
+  eClass realClass =
+      findClass(gym->clases, gym->countClasses, bookClass->idClass);
   // comprobar que la clase existe
   if (bookClass->idClass == "") {
     return eBookClass::ErrNonExistentClass;
@@ -171,8 +172,8 @@ eBookClass bookClassGym(eGym*& gym, uint idBook, str idClient) {
 
     /* Comprobar que el cliente no este inscripto en otra clase en el mismo
        horario, a su vez chequea que no este en ya inscripto en esta clase */
-  } else if (isClientInSchedule(gym->books, gym->countBooks, bookClass->schedule,
-                                idClient)) {
+  } else if (isClientInSchedule(gym->books, gym->countBooks,
+                                bookClass->schedule, idClient)) {
     return eBookClass::ErrClientSubscribedOtherClass;
   }
 
@@ -180,56 +181,65 @@ eBookClass bookClassGym(eGym*& gym, uint idBook, str idClient) {
   time_t now = time(0);
   uint diff = difftime(now, gym->today) / 60 / 60 / 24;
   if (diff >= 1) {
-    // siguiente dia
-    gym->today = now;
+
     // Guardo las asistencias en mi archivo
     stringstream ss;
     str timeAsString;
-    ss << now << ',' << endl;
+    ss << gym->today << ',' << endl;
     getline(ss, timeAsString, ',');
-    eCodFile res = writeAssistances(gym->assistances, gym->countAssistances, timeAsString);
+    eCodFile res =
+        writeAssistances(gym->assistances, gym->countAssistances, timeAsString);
 
-    // Reinicio las asistencias y paso de dia
-
-    resizeAssistences(&gym->assistances, gym->countAssistances, 0);
+    // Reinicio las asistencias
+    resetAssistances(&gym->assistances,gym->countAssistances);
     gym->countAssistances = 0;
+
+    // Reinicio los books
+    resetBooks(gym->books,gym->countBooks);
+    // paso al siguiente dia
+    gym->today = now;
   } else {
 
-    Inscripcion newInscription = {idBook,time(0)};
+    Inscripcion newInscription = {idBook, time(0)};
     // CHEQUEAR QUE HAYA ESPACIO
     if (gym->countAssistances < gym->countMaxAssistances) {
       // guardar asistencia
-      Asistencia* assistance =
+      Asistencia *assistance =
           findAssistances(gym->assistances, gym->countAssistances, idClient);
 
       // chequear si existe
       if (assistance == nullptr) {
         // crearla y agregar
-        Asistencia newAssistance = {stoul(idClient),1,new Inscripcion[DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY]};
+        Asistencia newAssistance = {
+            stoul(idClient), 1,
+            new Inscripcion[DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY]};
         *newAssistance.CursosInscriptos = newInscription;
         gym->countAssistances++;
-        addAssistance(gym->assistances,gym->countAssistances,newAssistance);
+        addAssistance(gym->assistances, gym->countAssistances, newAssistance);
       } else {
         // agregar
-        if(assistance->cantInscriptos < DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY){
+        if (assistance->cantInscriptos <
+            DEFAULT_MAX_INSCRIPTIONS_ASSITANCES_CAPACITY) {
           assistance->cantInscriptos++;
-          addInscriptionAssistance(assistance->CursosInscriptos,assistance->cantInscriptos,newInscription);
+          addInscriptionAssistance(assistance->CursosInscriptos,
+                                   assistance->cantInscriptos, newInscription);
 
         } else {
           return eBookClass::ErrMaxInscriptionsReachedInClass;
         }
       }
-      //AGREGAR INFO A BOOK
+      // AGREGAR INFO A BOOK
       bookClass->countInscriptions++;
-      addClientInBook(&bookClass->inscriptions,bookClass->countInscriptions,idClient);
+      addClientInBook(&bookClass->inscriptions, bookClass->countInscriptions,
+                      idClient);
     } else {
-      resizeAssistences(&gym->assistances, gym->countAssistances,
+      resizeAssistances(&gym->assistances, gym->countAssistances,
                         gym->countMaxAssistances * 2);
       gym->countMaxAssistances = gym->countMaxAssistances * 2;
       if (gym->assistances == nullptr) {
         return eBookClass::ErrSpace;
       }
-      bookClassGym(gym,idBook,idClient);
+      bookClassGym(gym, idBook, idClient);
     }
   }
   return eBookClass::SuccessBook;
@@ -238,11 +248,11 @@ eBookClass bookClassGym(eGym*& gym, uint idBook, str idClient) {
 bool isClientInInscription(str *inscriptions, uint cant, str idClient) {
   str *auxInscriptions = (inscriptions),
       *auxLastInscriptions = (inscriptions) + cant - 1;
-  if(cant == 0){
+  if (cant == 0) {
     return false;
   }
   while (true) {
-    if ( idClient.compare(*auxInscriptions) == 0) {
+    if (idClient.compare(*auxInscriptions) == 0) {
       return true;
     }
     if (auxInscriptions == auxLastInscriptions)
@@ -271,7 +281,7 @@ bool isClientInSchedule(eBook *books, uint cant, uint schedule, str idClient) {
   return false;
 }
 
-eBook* findBook(eBook *books, uint cant, uint id) {
+eBook *findBook(eBook *books, uint cant, uint id) {
   eBook *aux = books, *ultimo = (books) + cant - 1;
   while (true) {
     if (aux->idBook == id) {
@@ -302,13 +312,13 @@ eClass findClass(eClass *classes, uint cant, str idClass) {
   return nullClass;
 }
 
-void printBooks(eBook* books,uint cant){
+void printBooks(eBook *books, uint cant) {
   eBook *aux = books, *last = (books) + (cant - 1);
   cout << "--------------Books--------------" << endl;
   while (true) {
     cout << "Name:" << aux->idBook << endl;
     cout << "Cant inscriptions:" << aux->countInscriptions << endl;
-    if(aux->countInscriptions){
+    if (aux->countInscriptions) {
       str *auxH = aux->inscriptions,
           *lastAux = (aux->inscriptions) + (aux->countInscriptions - 1);
       cout << "Inscriptiones:";
@@ -329,17 +339,36 @@ void printBooks(eBook* books,uint cant){
   cout << "---------------------------------------" << endl;
 }
 
-uint genRandomNumber(uint min,uint max){
+uint genRandomNumber(uint min, uint max) {
 
-   uint randomNumber;
-   randomNumber = (rand() % max) + min;
-   return randomNumber;
+  uint randomNumber;
+  randomNumber = (rand() % max) + min;
+  return randomNumber;
 }
 
-eAddClientInBook addClientInBook(str** inscriptions,uint cant,str idClient){
-   if(cant == 0){
+eAddClientInBook addClientInBook(str **inscriptions, uint cant, str idClient) {
+  if (cant == 0) {
     *(*inscriptions + cant - 1) = idClient;
-   }
-   *(*inscriptions + cant - 1) = idClient;
-   return eAddClientInBook::SuccessAddBooks;
+  }
+  *(*inscriptions + cant - 1) = idClient;
+  return eAddClientInBook::SuccessAddBooks;
+}
+
+eResetBooks resetBooks(eBook *&books, uint cant) {
+  for (uint i = 0; i < cant; i++) {
+    delete[] books[i].inscriptions;
+    books[i].inscriptions = new str[DEFAULT_MAX_CLASS_CAPACITY];
+    books[i].countInscriptions = 0;
+  }
+  return eResetBooks::SuccessReset;
+}
+
+eResetAssistances resetAssistances(Asistencia** assistances,uint cant){
+  Asistencia *aux = new Asistencia[DEFAULT_MAX_ASSITANCES_CAPACITY];
+  for(int i=0;i < cant ; i++){
+    delete [] assistances[i]->CursosInscriptos;
+  }
+  delete[] *assistances;
+  *assistances = aux;
+  return eResetAssistances::SuccessResetAssistance;
 }
