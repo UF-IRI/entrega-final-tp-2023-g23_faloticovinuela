@@ -47,11 +47,12 @@ eCodFile readAssistances(ifstream &file, Asistencia *assistances) {
 
 void printAssistances(Asistencia *assitances, int cant) {
   Asistencia *auxA = assitances, *lastA = (assitances) + (cant - 1);
+  int i= 0;
   cout << "--------------Assistences--------------" << endl;
   if (cant == 0)
     return;
   while (true) {
-    cout << "id:" << auxA->idCliente << endl;
+    cout <<i << "-"<< "id:" << auxA->idCliente << endl;
     Inscripcion *auxH = auxA->CursosInscriptos,
                 *lastAux =
                     (auxA->CursosInscriptos) + (auxA->cantInscriptos - 1);
@@ -66,6 +67,7 @@ void printAssistances(Asistencia *assitances, int cant) {
     if (auxA == lastA)
       break;
     auxA++;
+    i++;
   }
   cout << "---------------------------------------" << endl;
 }

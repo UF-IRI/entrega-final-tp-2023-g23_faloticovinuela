@@ -193,7 +193,7 @@ eBookClass bookClassGym(eGym *&gym, uint idBook, str idClient) {
     // Reinicio las asistencias
     resetAssistances(&gym->assistances,gym->countAssistances);
     gym->countAssistances = 0;
-
+    gym->countMaxAssistances = DEFAULT_MAX_ASSITANCES_CAPACITY;
     // Reinicio los books
     resetBooks(gym->books,gym->countBooks);
     // paso al siguiente dia
@@ -365,8 +365,9 @@ eResetBooks resetBooks(eBook *&books, uint cant) {
 
 eResetAssistances resetAssistances(Asistencia** assistances,uint cant){
   Asistencia *aux = new Asistencia[DEFAULT_MAX_ASSITANCES_CAPACITY];
+  Asistencia *auxLista = *assistances;
   for(int i=0;i < cant ; i++){
-    delete [] assistances[i]->CursosInscriptos;
+    delete [] (auxLista + i)->CursosInscriptos;
   }
   delete[] *assistances;
   *assistances = aux;

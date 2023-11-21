@@ -60,11 +60,6 @@ int main() {
         gymData->today +=  100000000;
     }
     cout<<"params: " << "idBook: " << idBook << " - idClient:" << idClient  <<endl;
-    cout << "Cant clientes: " << gymData->countClients
-         << " - Cant assitances: " << gymData->countAssistances
-         << " - Cant classes: " << gymData->countClasses
-         << " - Cant books: " << gymData->countBooks
-         << " - Today: " << ctime(&gymData->today) << endl;
     eBookClass res = bookClassGym(gymData, idBook, to_string(idClient));
     cout<<i << ":" << res <<endl;
   }
