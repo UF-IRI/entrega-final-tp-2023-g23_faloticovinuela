@@ -56,9 +56,6 @@ int main() {
   for (int i = 0; i < 10000; i++) {
     uint idBook = genRandomNumber(1, realCantClasses);
     uint idClient = genRandomNumber(1, countClients);
-    if(i == 5000){
-        gymData->today +=  100000000;
-    }
     cout<<"params: " << "idBook: " << idBook << " - idClient:" << idClient  <<endl;
     eBookClass res = bookClassGym(gymData, idBook, to_string(idClient));
     cout<<i << ":" << res <<endl;
@@ -74,8 +71,17 @@ int main() {
 
   delete[] clients;
   delete[] classes;
- // delete[] assitances;
+  Asistencia *auxLista = gymData->assistances;
+  for(int i=0;i < gymData->countAssistances ; i++){
+    delete[] (auxLista + i)->CursosInscriptos;
+  }
+  delete[] gymData->assistances;
+  eBook *auxBooks = gymData->books;
+  for(int i=0;i < gymData->countBooks ; i++){
+    delete [] (auxBooks + i)->inscriptions;
+  }
   delete[] books;
+  delete gymData;
   fileClient.close();
   fileClasses.close();
   //fileAssistances.close();
