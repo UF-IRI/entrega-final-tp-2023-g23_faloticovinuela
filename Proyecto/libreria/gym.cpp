@@ -198,6 +198,7 @@ eBookClass bookClassGym(eGym *&gym, uint idBook, str idClient) {
     resetBooks(gym->books,gym->countBooks);
     // paso al siguiente dia
     gym->today = now;
+    return eBookClass::ResetDay;
   } else {
 
     Inscripcion newInscription = {idBook, time(0)};

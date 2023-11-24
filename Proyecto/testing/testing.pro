@@ -12,7 +12,11 @@ isEmpty(CATCH_INCLUDE_DIR): {
 
 SOURCES += \
     main.cpp \
-    tst_test_gym.cpp
+    tst_test_gym.cpp\
+    tst_assistance.cpp \
+    tst_client.cpp \
+
+
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libreria/release/ -llibreria
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libreria/debug/ -llibreria

@@ -7,7 +7,7 @@
 
 enum addContact  { ErrAgrEspacio = -1,  ExitoAgregar = 1 };
 enum srchClass { ErrSrchValue = -2,   ErrSrchIndex = -1, SuccessSearch = 1 };
-enum bookClass { ErrMaxInscriptionsReachedInClass = -7,ErrNonNoSpaceInClass = -7,ErrNonExistentClass = -6,ErrClientAlreadySubscribed = -5 ,ErrClientSubscribedOtherClass = -4 ,ErrNonExistentClient = -3,ErrSpace = -2,   ErrNotFoundClass = -1, SuccessBook = 1 };
+enum bookClass { ResetDay = -8,ErrMaxInscriptionsReachedInClass = -7,ErrNonNoSpaceInClass = -7,ErrNonExistentClass = -6,ErrClientAlreadySubscribed = -5 ,ErrClientSubscribedOtherClass = -4 ,ErrNonExistentClient = -3,ErrSpace = -2,   ErrNotFoundClass = -1, SuccessBook = 1 };
 typedef enum eAddClientInBook{ErrorSpaceBooks=0,  SuccessAddBooks=1} eAddInscriptionInBook;
 typedef enum resetBooks { ErrReset = -1,   SuccessReset = 1 } eResetBooks;
 typedef enum addContact  eAddContact;

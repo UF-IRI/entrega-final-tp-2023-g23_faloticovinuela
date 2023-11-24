@@ -17,7 +17,7 @@ void resizeAssistances(Asistencia **miLista, uint tam, uint nuevoTam) {
   *miLista = aux;
 }
 
-eCodFile readAssistances(ifstream &file, Asistencia *assistances) {
+eCodFile readAssistances(ifstream &file, Asistencia *assistances,uint cant) {
   // SABIENDO QUE ESTA ORDENADO EL ARCHIVO CLASES
   if (!file.is_open())
     return eCodFile::ErrorOpening;
@@ -26,8 +26,11 @@ eCodFile readAssistances(ifstream &file, Asistencia *assistances) {
   file.seekg(0);
 
   Asistencia *aux = assistances;
-
+  uint i=0;
   while (!file.eof()) {
+    if(i == cant){
+        break;
+    }
     file.read((char *)&aux->idCliente, sizeof(uint));
     file.read((char *)&aux->cantInscriptos, sizeof(uint));
 
@@ -40,6 +43,7 @@ eCodFile readAssistances(ifstream &file, Asistencia *assistances) {
     aux->CursosInscriptos = registered;
 
     aux++;
+    i++;
   }
 
   return eCodFile::SuccessOperation;
@@ -73,9 +77,8 @@ void printAssistances(Asistencia *assitances, int cant) {
 }
 
 eAddAssistance addAssistance(Asistencia*& assistances,uint cant ,Asistencia assistance){
-  if(cant==0){
-    assistances[0] = assistance;
-    return eAddAssistance::SuccessAdd;
+  if(assistances == nullptr){
+    return eAddAssistance::ErrorSpace;
   }
   *(assistances + cant -1) = assistance;
   // miAgenda->*(misContactos + i )
@@ -128,7 +131,7 @@ eCodFile writeAssistances(Asistencia *assistances, uint cant, str today) {
 Asistencia* findAssistances(Asistencia* assistances,uint cant ,str idClient) {
   Asistencia* aux = assistances,
       * ultimo = (assistances) +cant - 1;
-  if(cant == 0){
+  if(cant == 0 || assistances == nullptr){
     return nullptr;
   }
   while(true) {
@@ -143,8 +146,8 @@ Asistencia* findAssistances(Asistencia* assistances,uint cant ,str idClient) {
 }
 
 eAddInscriptionInAssistance addInscriptionAssistance(Inscripcion*& inscriptions,uint cant,Inscripcion inscription){
-  if(cant == 0){
-    *(inscriptions + cant - 1) = inscription;
+  if(inscriptions == nullptr){
+    return eAddInscriptionInAssistance::ErrorSpaceAssitance;
   }
   *(inscriptions + cant - 1) = inscription;
   return eAddInscriptionInAssistance::SuccessAddAssistance;

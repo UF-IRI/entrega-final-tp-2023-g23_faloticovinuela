@@ -21,7 +21,7 @@ const Asistencia nullAsistencia = { 0, 0, nullptr};
 
 eAddAssistance addAssistance(Asistencia*& assistances,uint cant ,Asistencia assistance);
 bool hasSpace(Asistencia* assistances);
-eCodFile readAssistances(ifstream& file,Asistencia* assistances);
+eCodFile readAssistances(ifstream& file,Asistencia* assistances,uint cant);
 void printAssistances(Asistencia* assitances,int cant);
 eCodFile writeAssitance(ofstream& file,Asistencia* assistances,int cant);
 int countAssistences(ifstream& file);

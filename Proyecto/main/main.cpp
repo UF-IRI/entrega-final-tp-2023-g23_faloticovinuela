@@ -58,7 +58,7 @@ int main() {
     uint idClient = genRandomNumber(1, countClients);
     cout<<"params: " << "idBook: " << idBook << " - idClient:" << idClient  <<endl;
     eBookClass res = bookClassGym(gymData, idBook, to_string(idClient));
-    cout<<i << ":" << res <<endl;
+    cout<< "RES NMR "<<i << " :" << res <<endl;
   }
 
   cout << "Cant clientes: " << gymData->countClients
